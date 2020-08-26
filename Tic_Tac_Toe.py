@@ -18,8 +18,23 @@ def print_board(p_board):
     print(" | ".join(p_board[7:10]))
 
 
+def welcome():
+    # Welcome message
+    print('********************************')
+    print('Welcome to the Tic-Tac-Toe game!')
+    print('********************************')
+    # Signing initial values to the board
+    board = ['*', "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+    print('This is the board and its position numbers:')
+    print_board(board)
+    input("Press ENTER to play!")
+    print()
+
+
 def pick_marker():
-    player_1 = (input('Player 1, please, pick a marker: "X" or "O": ')).upper()
+    req_mark = 'Player 1, pick a marker - "X" or "O": '
+    player_1 = (input(req_mark)).upper()
     player_2 = ''
     marker = True
     while marker:
@@ -31,7 +46,7 @@ def pick_marker():
             marker = False
         else:
             print('Incorrect marker.')
-            player_1 = (input('Player 1, please, pick a marker: X or O: ')).upper()
+            player_1 = (input(req_mark)).upper()
 
     return {'1': player_1, '2': player_2}
 
@@ -46,16 +61,17 @@ def replace_index(n_player, pos, old_board):
 
 def pick_position(p_num, t_pos):
     ref_position = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    pos = int(input(f'Player {p_num}, enter a position number: '))
+    req_pos = f'Player {p_num}, enter a position number: '
+    pos = int(input(req_pos))
     while True:
         if pos in t_pos:
             print('This position was already chosen!')
-            pos = int(input(f'Player {p_num}, enter a position number: '))
+            pos = int(input(req_pos))
         elif pos in ref_position:
             break
         else:
             print('Wrong position!')
-            pos = int(input(f'Player {p_num}, enter a position number: '))
+            pos = int(input(req_pos))
     return pos
 
 
@@ -84,16 +100,8 @@ def clear():
     print('\n' * 100)
 
 
-# Welcome message
-print()
-print('Welcome to the Tic-Tac-Toe game!')
-print()
-# Signing initial values to the board
-board = ['*', "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-
-print('This is the board and its position numbers:')
-print_board(board)
-print("Let's play!")
+welcome()
+clear()
 
 board = ['*', " ", " ", " ", " ", " ", " ", " ", " ", " "]
 
@@ -107,6 +115,7 @@ for i in range(1, 10):
     position = pick_position(player_num, taken_pos)
     taken_pos.append(position)
     board = replace_index(player[player_num], position, board)
+    clear()
     print_board(board)
     winner = check_win(board)
     if winner:
